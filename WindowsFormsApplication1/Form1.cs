@@ -22,6 +22,7 @@ namespace WindowsFormsApplication1
         private int picBoxWidth;
         private int picBoxLeft;
         private int picBoxTop;
+        private byte[] bt;
 
         Image bufferpic;//加快GDI读取用缓存图片
         Point M_pot_p = new Point();//原始位置 
@@ -319,7 +320,7 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("请填写应用URL 和 远程文件名 ");
                 return;
             }
-            strURL = "http://192.168.1.101:83/v2/tfs1/3/10001/file" + txtRemoteFile.Text;
+            strURL = txtAppUrl.Text + "/file" + txtRemoteFile.Text;
             var client = new RestClient(strURL);
             var request = new RestRequest("", Method.GET);
             IRestResponse response = client.Execute(request);
@@ -424,6 +425,69 @@ namespace WindowsFormsApplication1
             M_int_maxX = pictureBox1.Width - bufferpic.Width;
             M_int_maxY = pictureBox1.Height - bufferpic.Height;
             Cursor = Cursors.SizeAll;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           //
+            Uri url = new Uri(textBox1.Text);
+            var client = new RestClient(url.ToString());
+            txtRemoteFile.Text = url.PathAndQuery;
+
+            var request = new RestRequest("", Method.GET);
+            IRestResponse response = client.Execute(request);
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    //MessageBox.Show(response.ContentType);
+                    bt = response.RawBytes;
+                    MemoryStream ms = new MemoryStream(bt);
+                    bufferpic = Image.FromStream(ms);
+                    pictureBox1.Image = bufferpic;
+                    break;
+            }
+            if (txtAppUrl.Text.Trim() == string.Empty || txtRemoteFile.Text.Trim() == string.Empty)
+            {
+                MessageBox.Show("请填写应用URL 和 远程文件名 ");
+                return;
+            }
+
+            strURL = txtAppUrl.Text + "/file" + txtRemoteFile.Text;
+            
+            var request1 = new RestRequest("", Method.DELETE);
+            IRestResponse response1 = client.Execute(request1);
+            switch ((int)response1.StatusCode)
+            {
+                case 200: MessageBox.Show("删除成功"); break;
+                case 404: MessageBox.Show("文件不存在"); break;
+                default: MessageBox.Show(response1.StatusDescription); break;
+            }
+
+            var request2 = new RestRequest("", Method.POST);
+            if (chkRecursive.Checked)
+            {
+                strURL += "?recursive=1";
+            }
+            var client2 = new RestClient(strURL);
+            IRestResponse response2 = client.Execute(request2);
+            switch ((int)response2.StatusCode)
+            {
+                case 201: MessageBox.Show("创建成功"); break;
+                case 409: MessageBox.Show("文件已经存在"); break;
+                default: MessageBox.Show(response.StatusDescription); break;
+            }
+
+           
+            var request3 = new RestRequest("", Method.PUT);
+            request.AddFile("", bt,"");
+            IRestResponse response3 = client.Execute(request3);
+            switch ((int)response3.StatusCode)
+            {
+                case 200: MessageBox.Show("写入成功，可以访问"); txtURI.Text = strURL; break;
+                case 404: MessageBox.Show("文件不存在，请先创建"); break;
+                default: MessageBox.Show(response.StatusDescription); break;
+            }
+
         }
     }
 }

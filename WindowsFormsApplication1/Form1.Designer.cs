@@ -57,6 +57,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnReadFile = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,7 +155,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 120);
+            this.label4.Location = new System.Drawing.Point(12, 140);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 11;
@@ -160,14 +163,14 @@
             // 
             // txtURI
             // 
-            this.txtURI.Location = new System.Drawing.Point(96, 111);
+            this.txtURI.Location = new System.Drawing.Point(96, 137);
             this.txtURI.Name = "txtURI";
-            this.txtURI.Size = new System.Drawing.Size(590, 21);
+            this.txtURI.Size = new System.Drawing.Size(496, 21);
             this.txtURI.TabIndex = 12;
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(319, 148);
+            this.btnClear.Location = new System.Drawing.Point(319, 164);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 13;
@@ -325,12 +328,41 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(96, 103);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(364, 21);
+            this.textBox1.TabIndex = 30;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 106);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 31;
+            this.label9.Text = "远程地址";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(478, 106);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "写入集群";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(754, 714);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnReadFile);
             this.Controls.Add(this.label8);
@@ -403,6 +435,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnReadFile;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button1;
     }
 }
 
